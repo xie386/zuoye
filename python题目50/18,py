@@ -1,0 +1,14 @@
+"""
+【程序18】  
+题目：两个乒乓球队进行比赛，各出三人。甲队为a,b,c三人，乙队为x,y,z三人。
+已抽签决定比赛名单。有人向队员打听比赛的名单。
+a说他不和x比，c说他不和x,z比，请编程序找出三队赛手的名单。  
+"""
+from itertools import permutations
+
+jia = ['a', 'b', 'c']
+yi = ['x', 'y', 'z']
+
+for (a_opp, b_opp, c_opp) in permutations(yi, 3):
+    if a_opp != 'x' and c_opp != 'x' and c_opp != 'z':
+        print(f"a vs {a_opp}, b vs {b_opp}, c vs {c_opp}")
