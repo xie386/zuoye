@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}后台管理 - 科技公司 CMS{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <h2>后台管理面板</h2>
+
+    {% if msg %}
+    <div class="alert alert-success">{{ msg }}</div>
+    {% endif %}
+    {% if error %}
+    <div class="alert alert-error">{{ error }}</div>
+    {% endif %}
+
+    <!-- 发布新闻 -->
+    <section class="admin-section">
+        <h3>发布新新闻</h3>
+        <form method="POST" action="/admin/create" class="admin-form">
+            <div class="form-group">
+                <label for="title">新闻标题</label>
+                <input type="text" id="title" name="title" required placeholder="请输入新闻标题">
+            </div>
+            <div class="form-group">
+                <label for="category">新闻分类</label>
+                <select id="category" name="category" required>
+                    <option value="公司动态">公司动态</option>
+                    <option value="产品发布">产品发布</option>
+                    <option value="行业资讯">行业资讯</option>
+                    <option value="技术分享">技术分享</option>
+                    <option value="财务">财务</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="content">新闻内容</label>
+                <textarea id="content" name="content" rows="8" required placeholder="请输入新闻内容"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">发布新闻</button>
+        </form>
+    </section>
+
+    <!-- 新闻管理列表 -->
+    <section class="admin-section">
+        <h3>管理新闻（共 {{ news_list|length }} 条）</h3>
+        <form method="POST" action="/admin/clear" onsubmit="return confirm('确定要清空所有新闻吗？此操作不可恢复！');" style="display:inline;">
+            <button type="submit" class="btn btn-danger" style="margin-bottom:15px;">清空所有新闻</button>
+        </form>
+        {% if news_list %}
+        <div class="table-container">
+            <table class="news-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>标题</th>
+                        <th>分类</th>
+                        <th>发布时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for news in news_list %}
+                    <tr>
+                        <td>{{ news.id }}</td>
+                        <td>{{ news.title }}</td>
+                        <td><span class="tag">{{ news.category }}</span></td>
+                        <td>{{ news.date }}</td>
+                        <td>
+                            <a href="/news/{{ news.id }}" class="btn btn-sm">查看</a>
+                            <form method="POST" action="/admin/delete/{{ news.id }}" onsubmit="return confirm('确定删除「{{ news.title }}」吗？');" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-danger">删除</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="empty-tip">暂无新闻，请先发布</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

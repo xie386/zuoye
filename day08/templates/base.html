@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}科技公司 CMS{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">TechCMS</a>
+            <ul class="nav-links">
+                {% if session.username %}
+                <li><a href="/">首页</a></li>
+                <li><a href="/news">新闻列表</a></li>
+                {% if session.role == 'admin' %}
+                <li><a href="/admin">后台管理</a></li>
+                {% endif %}
+                <li><span class="user-info">{{ session.username }}({{ session.role }})</span></li>
+                <li><a href="/logout" class="btn-logout">退出</a></li>
+                {% else %}
+                <li><a href="/login">登录</a></li>
+                <li><a href="/register">注册</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 科技公司 CMS. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

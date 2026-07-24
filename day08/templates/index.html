@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}首页 - 科技公司 CMS{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <!-- 公司介绍 -->
+    <section class="company-intro">
+        <h1>科技公司</h1>
+        <p class="intro-text">我们是一家专注于前沿技术研发与创新的科技公司，致力于为客户提供优质的软件解决方案和技术咨询服务。</p>
+        <div class="intro-cards">
+            <div class="intro-card">
+                <h3>创新驱动</h3>
+                <p>持续投入研发，保持技术领先</p>
+            </div>
+            <div class="intro-card">
+                <h3>客户至上</h3>
+                <p>以客户需求为导向，提供定制化服务</p>
+            </div>
+            <div class="intro-card">
+                <h3>品质保障</h3>
+                <p>严格的质量管理体系，确保交付品质</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 最新新闻 -->
+    <section class="latest-news">
+        <h2>最新动态</h2>
+        {% if news_list %}
+        <div class="news-cards">
+            {% for news in news_list %}
+            <div class="news-card">
+                <span class="news-category">{{ news.category }}</span>
+                <h3><a href="/news/{{ news.id }}">{{ news.title }}</a></h3>
+                <p class="news-excerpt">{{ news.content[:100] }}{% if news.content|length > 100 %}...{% endif %}</p>
+                <span class="news-date">{{ news.date }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        <a href="/news" class="btn btn-secondary">查看全部新闻</a>
+        {% else %}
+        <p class="empty-tip">暂无新闻动态</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

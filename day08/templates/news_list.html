@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}新闻列表 - 科技公司 CMS{% endblock %}
+
+{% block content %}
+<div class="news-list-container">
+    <h2>新闻列表</h2>
+
+    {% if news_list %}
+    <div class="table-container">
+        <table class="news-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>标题</th>
+                    <th>分类</th>
+                    <th>发布时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for news in news_list %}
+                <tr>
+                    <td>{{ news.id }}</td>
+                    <td>{{ news.title }}</td>
+                    <td><span class="tag">{{ news.category }}</span></td>
+                    <td>{{ news.date }}</td>
+                    <td><a href="/news/{{ news.id }}" class="btn btn-sm">查看详情</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="empty-tip">暂无新闻</p>
+    {% endif %}
+</div>
+{% endblock %}
